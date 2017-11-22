@@ -108,9 +108,10 @@ extern int yydebug;
     MAURO = 258,
     NAME = 259,
     COLON = 260,
-    RIGHT_ARROW = 261,
-    LEFT_BRACE = 262,
-    RIGHT_BRACE = 263
+    SEMICOLON = 261,
+    RIGHT_ARROW = 262,
+    LEFT_BRACE = 263,
+    RIGHT_BRACE = 264
   };
 #endif
 
@@ -130,7 +131,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 134 "grammar.tab.c" /* yacc.c:358  */
+#line 135 "grammar.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -372,10 +373,10 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   10
+#define YYLAST   11
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  9
+#define YYNTOKENS  10
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
@@ -386,7 +387,7 @@ union yyalloc
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   263
+#define YYMAXUTOK   264
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -421,7 +422,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8
+       5,     6,     7,     8,     9
 };
 
 #if YYDEBUG
@@ -437,8 +438,8 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "MAURO", "NAME", "COLON", "RIGHT_ARROW",
-  "LEFT_BRACE", "RIGHT_BRACE", "$accept", "input", YY_NULLPTR
+  "$end", "error", "$undefined", "MAURO", "NAME", "COLON", "SEMICOLON",
+  "RIGHT_ARROW", "LEFT_BRACE", "RIGHT_BRACE", "$accept", "input", YY_NULLPTR
 };
 #endif
 
@@ -447,7 +448,7 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   263
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264
 };
 # endif
 
@@ -465,7 +466,7 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -2,     1,    -1,    -5,     0,    -4,     2,    -5
+      -3,    -2,     1,    -1,    -5,    -4,     0,     2,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -493,27 +494,27 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     4,     3,     7,     5,     0,     6,     0,     0,     0,
-       8
+       1,     4,     3,     6,     5,     0,     0,     0,     7,     0,
+       0,     8
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     0,     4,     7,     5,    -1,     6,    -1,    -1,    -1,
-       8
+       3,     0,     4,     7,     5,    -1,    -1,    -1,     8,    -1,
+      -1,     9
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,    10,     4,     0,     5,     6,     7,     8
+       0,     3,    11,     4,     0,     5,     7,     8,     9
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     9,    10,    10
+       0,    10,    11,    11
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1196,7 +1197,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1200 "grammar.tab.c" /* yacc.c:1646  */
+#line 1201 "grammar.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

@@ -48,9 +48,10 @@ extern int yydebug;
     MAURO = 258,
     NAME = 259,
     COLON = 260,
-    RIGHT_ARROW = 261,
-    LEFT_BRACE = 262,
-    RIGHT_BRACE = 263
+    SEMICOLON = 261,
+    RIGHT_ARROW = 262,
+    LEFT_BRACE = 263,
+    RIGHT_BRACE = 264
   };
 #endif
 

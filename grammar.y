@@ -9,7 +9,7 @@
 %define api.value.type {double}
 
 
-%token MAURO NAME COLON RIGHT_ARROW LEFT_BRACE RIGHT_BRACE
+%token MAURO NAME COLON SEMICOLON RIGHT_ARROW LEFT_BRACE RIGHT_BRACE
 
 
 %start input

@@ -4,14 +4,19 @@ extern int yyparse();
 
 extern int yylineno;
 
+extern int yydebug;
+
+using namespace std;
+
 int main()
 {
+    yydebug = 1;
     int result = yyparse();
   if (result == 0)
-		std::cout << "The input is valid" << std::endl;
+		cout << "The input is valid" << endl;
 	else
-		std::cout << "The input is invalid" << std::endl;
+		cout << "The input is invalid" << endl;
 
-		std::cout << "The amount of lines in the input is: " << yylineno << std::endl;
+		cout << "The amount of lines in the input is: " << yylineno << endl;
     return result;
 }

@@ -46,18 +46,45 @@ extern int yydebug;
   enum yytokentype
   {
     MAURO = 258,
-    NAME = 259,
-    COLON = 260,
-    SEMICOLON = 261,
-    RIGHT_ARROW = 262,
-    LEFT_BRACE = 263,
-    RIGHT_BRACE = 264
+    ID = 259,
+    IF = 260,
+    THEN = 261,
+    ELSE = 262,
+    WHILE = 263,
+    LEFT_ARROW = 264,
+    OU = 265,
+    AND = 266,
+    GLEICH = 267,
+    MAIORGLEICH = 268,
+    MENORGLEICH = 269,
+    MAIOR = 270,
+    MENOR = 271,
+    NOT = 272,
+    TRUE = 273,
+    FALSE = 274,
+    NUMBERF = 275,
+    NUMBERI = 276
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef double YYSTYPE;
+
+union YYSTYPE
+{
+#line 11 "grammar.y" /* yacc.c:1909  */
+
+        int intval;              /* Constant integer value */
+        float floatval;               /* Constant floating point value */
+  //     char *str;              /* Ptr to constant string (strings are malloc'd) */
+  //      exprT expr;             /* Expression -  constant or address */
+  //      operatorT *operatorP;   /* Pointer to run-time expression operator */
+    
+
+#line 85 "grammar.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

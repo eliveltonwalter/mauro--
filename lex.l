@@ -1,24 +1,57 @@
 %option noyywrap
+%x comment
 %{
+	#include <stdlib.h>
 	#include "grammar.tab.h"
 %}
 
-alpha 			[a-zA-Z]
-name				{alpha}([0-9]*{alpha}*)+
-whitespace	[ \r\t\v\f]
+letter 			[a-zA-Z]
+digit				[0-9]
+id				{letter}({letter}|{digit})*+
+whitespace	[ \r\v\f]
 linefeed		\n
+leo	{digit}+
+girombossauro	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 
 %%
 
-"M_"		{ return MAURO; }
-{name}	{ return NAME; }
-":"			{ return COLON; }
-";"			{ return SEMICOLON; }
-"->"		{ return RIGHT_ARROW; }
-"{"			{ return LEFT_BRACE; }
-"}"			{ return RIGHT_BRACE; }
+"/*"						{ BEGIN comment; }
+<comment>[^*\n]	{  }
+<comment>"*/"		{ BEGIN INITIAL; }
+<comment>"*"		{  }
+
+"M_"							{ return (MAURO);		 		}
+{leo}							{ return (NUMBERI);	 		}
+"leo"							{	return (NUMBERI);	 		}
+"girombossauro"		{	return (NUMBERF);	 		}
+{girombossauro}		{ return (NUMBERF);  		}
+{id}							{ return (ID); 			 		}
+Seria_verdade_se 	{ return (IF); 			 		}
+then							{ return (THEN); 		 		}
+Nao_fosse_mentira { return (ELSE); 		 		}
+"VILE" 						{ return (WHILE); 	 		}
+"OR" 							{ return (OU); 			 		}
+"AND"							{ return (AND); 		 		}
+"=="							{ return (GLEICH); 	 		}
+":"								{ return (':'); 		 		}
+";"								{ return (';'); 				}
+"->"							{ return (LEFT_ARROW);  }
+"{"								{ return ('{'); 				}
+"}"								{ return ('}'); 				}
+"<"								{ return ('<'); 				}
+"<="							{ return (MENORGLEICH); }
+"="								{ return ('='); 				}
+"<>"							{ return ('<>'); 			 	}
+">"								{ return ('>'); 				}
+">="							{ return (MAIORGLEICH); }
+"NAOCARA"					{ return (NOT); 				}
+"V"								{ return (TRUE); 			 	}
+"F"								{ return (FALSE); 			}
+
 {whitespace}
 {linefeed}	++yylineno;
+
+
 
 %%
 #include <stdio.h>

@@ -2,23 +2,39 @@
 	#include <math.h>
 	#include <stdio.h>
 	#include <stdlib.h>
+	#include <string.h>
+	#include "SymbolTable.h"
 	int yylex (void);
 	#define YYDEBUG 1 /* For Debugging */
 	void yyerror(char const *);
+	int errors; /* Error Count */
 
+install ( char *sym_name )
+{
+	symrec *s;
+	s = getsym (sym_name);
+
+	if (s == 0) s = putsym (sym_name);
+	else
+	{
+		errors++;
+		printf( "%s is already defined\n", sym_name );
+	}
+}
 %}
 
 %union {
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */
-  //     char *str;              /* Ptr to constant string (strings are malloc'd) */
+       	char *str;              /* Ptr to constant string (strings are malloc'd) */
   //      exprT expr;             /* Expression -  constant or address */
   //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     };
 
-%token MAURO ID IF THEN ELSE WHILE LEFT_ARROW OU AND GLEICH MAIORGLEICH MENORGLEICH MAIOR MENOR NOT TRUE FALSE
+%token MAURO IF THEN ELSE WHILE LEFT_ARROW OU AND GLEICH MAIORGLEICH MENORGLEICH MAIOR MENOR NOT TRUE FALSE
 %token <floatval> NUMBERF
 %token <intval> NUMBERI
+%token <str>	ID
 
 %error-verbose
 
@@ -31,7 +47,7 @@
 %%
 
 init:
-	  MAURO ID ':' LEFT_ARROW
+	  MAURO ID ':' LEFT_ARROW { install($2); }
 			'{'
 				statement_list
 			'}'
@@ -54,8 +70,8 @@ statement_else	:	ELSE'{'statement_list'}'				{	}
 type: NUMBERF  {  }
 		| NUMBERI	 {  }
 ;
-declaration	: type ID '=' exp	{  }
-		| type ID		{  }
+declaration	: type ID		{ install($2);  }
+		|	type ID '=' exp	{ install($2); }
 		|	ID '=' exp	{ 	}
 ;
 Logic	:	Logic OU Logic	{	 }
@@ -73,8 +89,7 @@ comparacao_exp	:	exp GLEICH exp	{/*isFirst = 1;	*/ }
 ;
 
 exp : type 				{ /*gen_code( LD_INT, $1 ); */}
-    | ID 					{/* context_check( LD_VAR, $1 );*/ }
-    | exp '<' exp { /*gen_code( LT, 0 );*/ }
+ 		| exp '<' exp { /*gen_code( LT, 0 );*/ }
     | exp '=' exp {/* gen_code( EQ, 0 ); */}
     | exp '>' exp {/* gen_code( GT, 0 ); */}
     | exp '+' exp {/* gen_code( ADD, 0 ); */ }
@@ -83,6 +98,7 @@ exp : type 				{ /*gen_code( LD_INT, $1 ); */}
     | exp '/' exp {/* gen_code( DIV, 0 ); */}
     | exp '^' exp {/* gen_code( PWR, 0 );*/ }
     | '(' exp ')'
+		| ID 					{ install($1); /* context_check( LD_VAR, $1 );*/ }
 ;
 
 %%
@@ -90,6 +106,6 @@ extern int yylineno;
 
 void yyerror(char const *errmsg)
 {
+	errors++;
 	printf("\n Error %s at line %d \n",errmsg ,yylineno);
-	//exit(1);
 }

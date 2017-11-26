@@ -4,5 +4,8 @@ M_LogicaNaoEhMatematica: ->
 {
 /* lixxxuuu  */
 
-leo x = 9 + 1;
+leo x = 9 + 1 ;
+
+leo x = 10 + 2;
+
 }

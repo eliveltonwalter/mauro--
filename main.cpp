@@ -6,13 +6,16 @@ extern int yylineno;
 
 extern int yydebug;
 
+extern int errors;
+
 using namespace std;
 
 int main()
 {
-    yydebug = 1;
+  //  yydebug = 1;
+  errors = 0;
     int result = yyparse();
-  if (result == 0)
+  if (/*result == 0*/ errors == 0)
 		cout << "The input is valid" << endl;
 	else
 		cout << "The input is invalid" << endl;

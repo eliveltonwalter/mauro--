@@ -2,6 +2,7 @@
 %x comment
 %{
 	#include <stdlib.h>
+	#include <string.h> /* for strdup */
 	#include "grammar.tab.h"
 %}
 
@@ -21,11 +22,11 @@ girombossauro	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 <comment>"*"		{  }
 
 "M_"							{ return (MAURO);		 		}
-{leo}							{ return (NUMBERI);	 		}
+{leo}							{ yylval.intval = atoi(yytext);  return (NUMBERI);	 		}
 "leo"							{	return (NUMBERI);	 		}
 "girombossauro"		{	return (NUMBERF);	 		}
-{girombossauro}		{ return (NUMBERF);  		}
-{id}							{ return (ID); 			 		}
+{girombossauro}		{ yylval.floatval = atof(yytext);  return (NUMBERF);  	}
+{id}							{ yylval.str = (char *) strdup(yytext); return (ID); 		}//aloca e copia
 Seria_verdade_se 	{ return (IF); 			 		}
 then							{ return (THEN); 		 		}
 Nao_fosse_mentira { return (ELSE); 		 		}
@@ -41,16 +42,21 @@ Nao_fosse_mentira { return (ELSE); 		 		}
 "<"								{ return ('<'); 				}
 "<="							{ return (MENORGLEICH); }
 "="								{ return ('='); 				}
-"<>"							{ return ('<>'); 			 	}
+
 ">"								{ return ('>'); 				}
 ">="							{ return (MAIORGLEICH); }
 "NAOCARA"					{ return (NOT); 				}
 "V"								{ return (TRUE); 			 	}
 "F"								{ return (FALSE); 			}
+"^" 							{ return ('^'); 				}
+"+" 							{ return ('+'); 				}
+"-" 							{ return ('-'); 				}
+"*" 							{ return ('*'); 				}
+"/" 							{ return ('/'); 				}
+"%" 							{ return ('%'); 				}
 
 {whitespace}
 {linefeed}	++yylineno;
-
 
 
 %%

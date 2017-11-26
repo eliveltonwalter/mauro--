@@ -46,24 +46,24 @@ extern int yydebug;
   enum yytokentype
   {
     MAURO = 258,
-    ID = 259,
-    IF = 260,
-    THEN = 261,
-    ELSE = 262,
-    WHILE = 263,
-    LEFT_ARROW = 264,
-    OU = 265,
-    AND = 266,
-    GLEICH = 267,
-    MAIORGLEICH = 268,
-    MENORGLEICH = 269,
-    MAIOR = 270,
-    MENOR = 271,
-    NOT = 272,
-    TRUE = 273,
-    FALSE = 274,
-    NUMBERF = 275,
-    NUMBERI = 276
+    IF = 259,
+    THEN = 260,
+    ELSE = 261,
+    WHILE = 262,
+    LEFT_ARROW = 263,
+    OU = 264,
+    AND = 265,
+    GLEICH = 266,
+    MAIORGLEICH = 267,
+    MENORGLEICH = 268,
+    MAIOR = 269,
+    MENOR = 270,
+    NOT = 271,
+    TRUE = 272,
+    FALSE = 273,
+    NUMBERF = 274,
+    NUMBERI = 275,
+    ID = 276
   };
 #endif
 
@@ -72,11 +72,11 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 11 "grammar.y" /* yacc.c:1909  */
+#line 26 "grammar.y" /* yacc.c:1909  */
 
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */
-  //     char *str;              /* Ptr to constant string (strings are malloc'd) */
+       	char *str;              /* Ptr to constant string (strings are malloc'd) */
   //      exprT expr;             /* Expression -  constant or address */
   //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     

@@ -4,10 +4,13 @@
 	#include <stdlib.h>
 	#include <string.h>
 	#include "SymbolTable.h"
+	#include "Intermediate_Code_Generator.hpp"
 	int yylex (void);
-	#define YYDEBUG 1 /* For Debugging */
+	#define YYDEBUG 1 /* Debugging */
 	void yyerror(char const *);
 	int errors; /* Error Count */
+
+	Intermediate_Code_Generator ICG;
 
 install ( char *sym_name )
 {
@@ -56,7 +59,7 @@ statement_list 	: 	statement			{	 }
 		| 	statement_list statement	{	 }
 ;
 
-statement 	: 	declaration ';'						{ 	}
+statement 	: 	declaration ';'						{ ICG.setOffset();	}
 		|	IF '(' Logic ')' statement_if				{	 }
 		|	WHILE '(' Logic ')' '{' statement_list '}'	{ 	}
 ;
@@ -88,15 +91,15 @@ comparacao_exp	:	exp GLEICH exp	{/*isFirst = 1;	*/ }
 		|	exp '<' exp	{/*isFirst = 1;	*/ }
 ;
 
-exp : type 				{ /*gen_code( LD_INT, $1 ); */}
- 		| exp '<' exp { /*gen_code( LT, 0 );*/ }
-    | exp '=' exp {/* gen_code( EQ, 0 ); */}
-    | exp '>' exp {/* gen_code( GT, 0 ); */}
-    | exp '+' exp {/* gen_code( ADD, 0 ); */ }
-    | exp '-' exp {/* gen_code( SUB, 0 ); */}
-    | exp '*' exp {/* gen_code( MULT, 0 );*/ }
-    | exp '/' exp {/* gen_code( DIV, 0 ); */}
-    | exp '^' exp {/* gen_code( PWR, 0 );*/ }
+exp : type 				{ /*ICG( LD_INT, $1 ); */	}
+ 		| exp '<' exp { /*ICG( LT, 0 );  			*/	}
+    | exp '=' exp { /*ICG( EQ, 0 );  			*/	}
+    | exp '>' exp { /*ICG( GT, 0 );  			*/	}
+    | exp '+' exp { ICG( ADD,$1,$3);		}		
+    | exp '-' exp { /*ICG( SUB, 0 ); 			*/	}
+    | exp '*' exp {/* ICG( MULT, 0 );			*/	}
+    | exp '/' exp { /*ICG( DIV, 0 ); 			*/	}
+    | exp '^' exp { /*ICG( PWR, 0 ); 			*/	}
     | '(' exp ')'
 		| ID 					{ install($1); /* context_check( LD_VAR, $1 );*/ }
 ;

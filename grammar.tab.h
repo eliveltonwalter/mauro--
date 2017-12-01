@@ -72,7 +72,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 26 "grammar.y" /* yacc.c:1909  */
+#line 29 "grammar.y" /* yacc.c:1909  */
 
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */

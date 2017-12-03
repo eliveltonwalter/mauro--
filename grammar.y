@@ -59,7 +59,7 @@ statement_list 	: 	statement			{	 }
 		| 	statement_list statement	{	 }
 ;
 
-statement 	: 	declaration ';'						{ ICG.setOffset();	}
+statement 	: 	declaration ';'						{ ICG.setOffset();}
 		|	IF '(' Logic ')' statement_if				{	 }
 		|	WHILE '(' Logic ')' '{' statement_list '}'	{ 	}
 ;
@@ -70,8 +70,8 @@ statement_else	:	ELSE'{'statement_list'}'				{	}
 		|	ELSE declaration';'					{	}
 		| %empty
 ;
-type: NUMBERF  {  }
-		| NUMBERI	 {  }
+type: NUMBERF  {   }
+		| NUMBERI	 {   }
 ;
 declaration	: type ID		{ install($2);  }
 		|	type ID '=' exp	{ install($2); }
@@ -91,19 +91,21 @@ comparacao_exp	:	exp GLEICH exp	{/*isFirst = 1;	*/ }
 		|	exp '<' exp	{/*isFirst = 1;	*/ }
 ;
 
-exp : type 				{ /*ICG( LD_INT, $1 ); */	}
+exp : NUM 				{ /*ICG( LD_INT, $1 ); */	}
  		| exp '<' exp { /*ICG( LT, 0 );  			*/	}
     | exp '=' exp { /*ICG( EQ, 0 );  			*/	}
     | exp '>' exp { /*ICG( GT, 0 );  			*/	}
-    | exp '+' exp { ICG( ADD,$1,$3);		}		
+    | exp '+' exp { ICG.gen_code(ADD/*,"t1"*/); }
     | exp '-' exp { /*ICG( SUB, 0 ); 			*/	}
     | exp '*' exp {/* ICG( MULT, 0 );			*/	}
     | exp '/' exp { /*ICG( DIV, 0 ); 			*/	}
     | exp '^' exp { /*ICG( PWR, 0 ); 			*/	}
     | '(' exp ')'
-		| ID 					{ install($1); /* context_check( LD_VAR, $1 );*/ }
+		| ID 					{/* context_check( LD_VAR, $1 );*/ }
 ;
-
+NUM: NUMBERF  {   }
+		| NUMBERI	 { ICG.gen_value($1); }
+;
 %%
 extern int yylineno;
 

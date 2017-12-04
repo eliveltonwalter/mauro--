@@ -49,8 +49,6 @@ context_check(code_op operation, char *sym_name )
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */
        	char *str;              /* Ptr to constant string (strings are malloc'd) */
-  //      exprT expr;             /* Expression -  constant or address */
-  //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     };
 
 %token MAURO IF THEN ELSE WHILE LEFT_ARROW OU AND GLEICH MAIORGLEICH MENORGLEICH MAIOR MENOR NOT TRUE FALSE PRINTF

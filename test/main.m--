@@ -11,7 +11,7 @@ leo i = 3/2;
 
 VILE (x < y) /*while*/
 {
-  MOSTRANATELA(LIXU);
+  POIMNATELA(LIXU);
 }
 Seria_verdade_se(x > z) /*IF*/
 {

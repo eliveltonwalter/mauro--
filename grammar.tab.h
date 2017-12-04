@@ -78,11 +78,9 @@ union YYSTYPE
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */
        	char *str;              /* Ptr to constant string (strings are malloc'd) */
-  //      exprT expr;             /* Expression -  constant or address */
-  //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     
 
-#line 86 "grammar.tab.h" /* yacc.c:1909  */
+#line 84 "grammar.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -22,7 +22,7 @@ girombossauro	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 <comment>"*"		{  }
 
 "M_"							{ return (MAURO);		 		}
-"MOSTRANATELA"		{ return (PRINTF);			}
+"POIMNATELA"		{ return (PRINTF);			}
 {leo}							{ yylval.intval = atoi(yytext);  return (NUMBERI);	 		}
 "leo"							{	return (NUMBERI);	 		}
 "girombossauro"		{	return (NUMBERF);	 		}

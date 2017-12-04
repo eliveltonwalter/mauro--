@@ -4,7 +4,22 @@ M_LogicaNaoEhMatematica: ->
 {
 /* lixxxuuu  */
 
-leo x = 1 + 2;
-leo y = 3 + 4;
+leo x = 1 + 2 ;
+leo y = 3;
+leo z;
+leo i = 3/2;
+
+VILE (x < y) /*while*/
+{
+  MOSTRANATELA(LIXU);
+}
+Seria_verdade_se(x > z) /*IF*/
+{
+  x = 10;
+}
+Nao_fosse_mentira
+{
+  x = 10;
+}
 
 }

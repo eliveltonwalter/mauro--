@@ -61,9 +61,10 @@ extern int yydebug;
     NOT = 271,
     TRUE = 272,
     FALSE = 273,
-    NUMBERF = 274,
-    NUMBERI = 275,
-    ID = 276
+    PRINTF = 274,
+    NUMBERF = 275,
+    NUMBERI = 276,
+    ID = 277
   };
 #endif
 
@@ -72,7 +73,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 29 "grammar.y" /* yacc.c:1909  */
+#line 48 "grammar.y" /* yacc.c:1909  */
 
         int intval;              /* Constant integer value */
         float floatval;               /* Constant floating point value */
@@ -81,7 +82,7 @@ union YYSTYPE
   //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     
 
-#line 85 "grammar.tab.h" /* yacc.c:1909  */
+#line 86 "grammar.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -80,58 +80,58 @@ public:
   {
     switch (op) {
       case HALT :
-
+        printf("HALT |");
       break;
       case READ_INT :
-
+        printf("READ_INT |");
       break;
       case WRITE_INT :
-
+        printf("WRITE_INT |");
       break;
       case STORE :
-
+        printf("STORE |");
       break;
       case JMP_FALSE :
-
+        printf("JMP_FALSE |");
       break;
       case GOTO :
-
+        printf("GOTO |");
       break;
       case DATA :
-
+        printf("DATA |");
       break;
       case LD_INT :
-
+        printf("LD_INT |");
       break;
       case LD_VAR :
-
+        printf("LD_VAR |");
       break;
       case LT :
-
+        printf("LT |");
       break;
       case EQ :
-
+        printf("EQ |");
       break;
       case GT :
-
+        printf("GT |");
       break;
       case ADD :
         printf("ADD |");
       break;
       case SUB :
-
+        printf("SUB |");
       break;
       case MULT :
-
+        printf("MULT |");
       break;
       case DIV :
-
+        printf("DIV |");
       break;
       case PWR :
-
+        printf("PWR |");
       break;
       default :
-        printf( "%sInternal Error: Memory Dump\n" );
+        printf( "Internal Error: Memory Dump\n" );
       break;
 }
 }

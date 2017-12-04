@@ -24,6 +24,25 @@ install ( char *sym_name )
 		printf( "%s is already defined\n", sym_name );
 	}
 }
+
+context_check(code_op operation, char *sym_name )
+{
+	symrec *identifier;
+	identifier = getsym( sym_name );
+	if ( identifier == 0 )
+	{
+		errors++;
+		printf( "%s", sym_name );
+		printf( "%s\n", " is an undeclared identifier" );
+	}
+	else
+		{
+			ICG.gen_code( operation );
+			ICG.gen_value(identifier->offset);
+		}
+}
+
+
 %}
 
 %union {
@@ -34,7 +53,7 @@ install ( char *sym_name )
   //      operatorT *operatorP;   /* Pointer to run-time expression operator */
     };
 
-%token MAURO IF THEN ELSE WHILE LEFT_ARROW OU AND GLEICH MAIORGLEICH MENORGLEICH MAIOR MENOR NOT TRUE FALSE
+%token MAURO IF THEN ELSE WHILE LEFT_ARROW OU AND GLEICH MAIORGLEICH MENORGLEICH MAIOR MENOR NOT TRUE FALSE PRINTF
 %token <floatval> NUMBERF
 %token <intval> NUMBERI
 %token <str>	ID
@@ -60,8 +79,9 @@ statement_list 	: 	statement			{	 }
 ;
 
 statement 	: 	declaration ';'						{ ICG.setOffset();}
-		|	IF '(' Logic ')' statement_if				{	 }
-		|	WHILE '(' Logic ')' '{' statement_list '}'	{ 	}
+		|	IF '(' Logic ')' statement_if				{	printf("IF\n"); }
+		|	WHILE '(' Logic ')' '{' statement_list '}'	{ printf("WHILE\n");	}
+		| PRINTF '('  ID  ')' ';' { printf("%s\n",$3); }
 ;
 statement_if	:	'{' statement_list '}'	statement_else			{	}
 		|	declaration ';' statement_else				{	}
@@ -78,32 +98,32 @@ declaration	: type ID		{ install($2);  }
 		|	ID '=' exp	{ 	}
 ;
 Logic	:	Logic OU Logic	{	 }
-		|	Logic AND Logic	{	 }
-		|	comparacao_exp			{ }
-		|	NOT Logic		{	 }
-		|	TRUE				{	 }
-		|	FALSE				{	 }
+		|	Logic AND Logic		{	 }
+		|	comparacao_exp		{  }
+		|	NOT Logic					{	 }
+		|	TRUE							{	 }
+		|	FALSE							{	 }
 ;
-comparacao_exp	:	exp GLEICH exp	{/*isFirst = 1;	*/ }
-		|	exp MAIORGLEICH exp	{/*isFirst = 1;	*/ }
-		|	exp MENORGLEICH exp	{/*isFirst = 1;	 */}
-		|	exp '>' exp	{/*isFirst = 1;	*/ }
-		|	exp '<' exp	{/*isFirst = 1;	*/ }
+comparacao_exp	:	exp GLEICH exp	{ }
+		|	exp MAIORGLEICH exp					{ }
+		|	exp MENORGLEICH exp					{ }
+		|	exp '>' exp									{ }
+		|	exp '<' exp									{ }
 ;
 
 exp : NUM 				{ /*ICG( LD_INT, $1 ); */	}
- 		| exp '<' exp { /*ICG( LT, 0 );  			*/	}
-    | exp '=' exp { /*ICG( EQ, 0 );  			*/	}
-    | exp '>' exp { /*ICG( GT, 0 );  			*/	}
+ 		| exp '<' exp { ICG.gen_code(LT);  	}
+    | exp '=' exp { ICG.gen_code(EQ);	  }
+    | exp '>' exp { ICG.gen_code(GT); 	}
     | exp '+' exp { ICG.gen_code(ADD/*,"t1"*/); }
-    | exp '-' exp { /*ICG( SUB, 0 ); 			*/	}
-    | exp '*' exp {/* ICG( MULT, 0 );			*/	}
-    | exp '/' exp { /*ICG( DIV, 0 ); 			*/	}
-    | exp '^' exp { /*ICG( PWR, 0 ); 			*/	}
+    | exp '-' exp { ICG.gen_code(SUB);	}
+    | exp '*' exp { ICG.gen_code(MULT);	}
+    | exp '/' exp { ICG.gen_code(DIV);	}
+    | exp '^' exp { ICG.gen_code(PWR);	}
     | '(' exp ')'
-		| ID 					{/* context_check( LD_VAR, $1 );*/ }
+		| ID 					{ context_check( LD_VAR, $1 ); }
 ;
-NUM: NUMBERF  {   }
+NUM: NUMBERF   { ICG.gen_value($1); }
 		| NUMBERI	 { ICG.gen_value($1); }
 ;
 %%

@@ -22,11 +22,11 @@ girombossauro	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 <comment>"*"		{  }
 
 "M_"							{ return (MAURO);		 		}
+"MOSTRANATELA"		{ return (PRINTF);			}
 {leo}							{ yylval.intval = atoi(yytext);  return (NUMBERI);	 		}
 "leo"							{	return (NUMBERI);	 		}
 "girombossauro"		{	return (NUMBERF);	 		}
 {girombossauro}		{ yylval.floatval = atof(yytext);  return (NUMBERF);  	}
-{id}							{ yylval.str = (char *) strdup(yytext); return (ID); 		}//aloca e copia
 Seria_verdade_se 	{ return (IF); 			 		}
 then							{ return (THEN); 		 		}
 Nao_fosse_mentira { return (ELSE); 		 		}
@@ -42,7 +42,8 @@ Nao_fosse_mentira { return (ELSE); 		 		}
 "<"								{ return ('<'); 				}
 "<="							{ return (MENORGLEICH); }
 "="								{ return ('='); 				}
-
+"("								{ return ('('); 				}
+")"								{ return (')'); 				}
 ">"								{ return ('>'); 				}
 ">="							{ return (MAIORGLEICH); }
 "NAOCARA"					{ return (NOT); 				}
@@ -54,6 +55,8 @@ Nao_fosse_mentira { return (ELSE); 		 		}
 "*" 							{ return ('*'); 				}
 "/" 							{ return ('/'); 				}
 "%" 							{ return ('%'); 				}
+
+{id}							{ yylval.str = (char *) strdup(yytext); return (ID); 		}//aloca e copia
 
 {whitespace}
 {linefeed}	++yylineno;
